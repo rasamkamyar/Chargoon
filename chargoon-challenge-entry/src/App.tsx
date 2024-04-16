@@ -4,13 +4,13 @@ import Form from "./Components/Form";
 import Sidebar from "./Components/Sidebar";
 import ExtendedTree from "./Components/Tree";
 import { getNodes } from "./transportLayer";
-import { NodeType } from "./types";
+import { NodeType, MenuActionType } from "./types";
+import actions from "./actions";
 
 function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showEdit, setShowEdit] = useState(true);
-  const [treeData, setTreeData] = useState([]);
-
+  const [treeData, setTreeData] = useState<NodeType[]>([]);
   const fetchTreeData = async () => {
     const result = await getNodes();
     setTreeData(result);
@@ -20,9 +20,21 @@ function App() {
     fetchTreeData();
   }, []);
 
-  const handleContextMenuClick = (actionKey: any) => {
-    switch (actionKey) {
-      case "":
+  const handleContextMenuClick = (actionKey: MenuActionType) => {
+    function removeItem(higherArchies:any, parentKey:any, targetKey: any) {
+      let temp = treeData[0];
+      let targetPath = [0];
+      for(let i = 0; i<higherArchies.length ; i++){
+        for(let j = 0; j<temp.children.length; j++){
+          // if(parentKey == )
+        }
+      }
+    }
+    switch (actionKey.type) {
+      case "DELETE":
+        if (actionKey.payload.children.length === 0) {
+          console.log("okkk");
+        }
         break;
     }
   };
@@ -30,7 +42,7 @@ function App() {
   const handleUpdateTree = (nodes: NodeType[]) => {};
 
   const handleUpdateNode = (key: string, data: any) => {};
-  let x = 10;
+
   return (
     <AppContext.Provider
       value={{

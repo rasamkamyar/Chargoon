@@ -16,8 +16,8 @@ export function ContextMenuEx({ id, children }) {
     </ContextMenu>)
 }
 
-export function ContextMenuItemEx({ title, handleClick }) {
+export function ContextMenuItemEx({ title, handleClick, type, payload }) {
     return (
-        <ContextMenuItem onClick={handleClick}>{title}</ContextMenuItem>
+        <ContextMenuItem onClick={handleClick({type: type, payload: payload})}>{title}</ContextMenuItem>
     );
 }
