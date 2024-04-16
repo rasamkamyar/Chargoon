@@ -1,0 +1,15 @@
+import React from 'react';
+
+interface Props {
+	children: JSX.Element[] | JSX.Element,
+	a?: Boolean
+}
+
+const Sidebar = ({a,children}: Props) => {
+	return (
+		<div className='sidebar' style={{width: '25%'}}>
+			{children}
+		</div>
+	);
+}
+export default Sidebar
