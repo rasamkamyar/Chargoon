@@ -17,7 +17,7 @@ export function createTreeMockData(): NodeType[] {
 							title: 'superadmin',
 							isDefault: true
 						}
-					],
+					],	
 					accesses: [],
 					children: [
 						{

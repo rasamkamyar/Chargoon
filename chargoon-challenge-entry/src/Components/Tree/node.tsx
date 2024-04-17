@@ -21,21 +21,21 @@ function Node({ node, handleContextMenuClick }: Props) {
 
       <ContextMenuEx id={node.key}>
         <ContextMenuItemEx
-          handleClick={()=>{}}
+          handleClick={() => { }}
           title={"افزودن زیرشاخه"}
-          type={actions.DELETE}
+          type="add"
           payload={node}
         />
         <ContextMenuItemEx
-          handleClick={()=>{}}
+          handleClick={handleContextMenuClick}
           title={"برش"}
-          type={actions.DELETE}
+          type={actions.CUT}
           payload={node}
         />
         <ContextMenuItemEx
-          handleClick={()=>{}}
+          handleClick={handleContextMenuClick}
           title={"چسباندن"}
-          type={actions.DELETE}
+          type={actions.PASTE}
           payload={node}
         />
         <ContextMenuItemEx

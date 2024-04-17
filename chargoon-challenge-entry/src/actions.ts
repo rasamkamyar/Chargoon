@@ -1,5 +1,7 @@
 const actions = {
-    DELETE: 'DELETE',
+    DELETE: "DELETE",
+    CUT: "CUT",
+    PASTE: "PASTE"
 }
 
 export default actions

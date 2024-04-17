@@ -11,6 +11,7 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showEdit, setShowEdit] = useState(true);
   const [treeData, setTreeData] = useState<NodeType[]>([]);
+  const [clipBoard, setClipBord] = useState<NodeType | null>(null)
   const fetchTreeData = async () => {
     const result = await getNodes();
     setTreeData(result);
@@ -40,7 +41,22 @@ function App() {
       }
     }
 
+    function pasteItem(currentItem: any, targetKey: any) {
 
+      if (currentItem.key === targetKey) {
+        for (let i = 0; i < temp.length; i++) {
+          deleteItem(temp[i], clipBoard.key)
+        }
+        let newHigherarchy = currentItem.hierarchy
+        newHigherarchy.push(currentItem.key)
+        currentItem.children.push({ ...clipBoard, parentKey: currentItem.key, hierarchy: newHigherarchy })
+
+      } else {
+        for (let index = 0; index < currentItem.children.length; index++) {
+          pasteItem(currentItem.children[index], targetKey)
+        }
+      }
+    }
     switch (actionKey.type) {
       case actions.DELETE:
         if (actionKey.payload.children?.length === 0) {
@@ -48,9 +64,24 @@ function App() {
             deleteItem(temp[i], actionKey.payload.key)
           }
           setTreeData([...temp])
-        } else (alert("آیتم دارای زیرشاخه قابل حذف نیست"))
+        } else (alert("آیتم دارای زیرشاخه امکان حذف ندارد"))
+        break;
+      case actions.CUT:
+        if (actionKey.payload.children?.length === 0) {
+          setClipBord(actionKey.payload)
+        } else alert("آیتم دارای زیرشاخه امکان کات کردن ندارد")
+        break;
+      case actions.PASTE:
+        if (actionKey.payload.key !== clipBoard?.key) {
+          for (let index = 0; index < temp.length; index++) {
+            pasteItem(temp[index], actionKey.payload.key)
+          }
+
+          setTreeData([...temp])
+        } else alert("امکان چسباندن آیتم بر روز خودش وجود ندارد")
         break;
     }
+
   };
   const handleUpdateTree = (nodes: NodeType[]) => { };
 
