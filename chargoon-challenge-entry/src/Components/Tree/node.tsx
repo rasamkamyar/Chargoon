@@ -21,9 +21,9 @@ function Node({ node, handleContextMenuClick }: Props) {
 
       <ContextMenuEx id={node.key}>
         <ContextMenuItemEx
-          handleClick={() => { }}
+          handleClick={handleContextMenuClick}
           title={"افزودن زیرشاخه"}
-          type="add"
+          type={actions.ADD}
           payload={node}
         />
         <ContextMenuItemEx

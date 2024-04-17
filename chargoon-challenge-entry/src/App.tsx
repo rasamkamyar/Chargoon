@@ -16,6 +16,7 @@ function App() {
     const result = await getNodes();
     setTreeData(result);
   };
+  console.log(treeData)
 
   useEffect(() => {
     fetchTreeData();
@@ -65,6 +66,7 @@ function App() {
           }
           setTreeData([...temp])
         } else (alert("آیتم دارای زیرشاخه امکان حذف ندارد"))
+
         break;
       case actions.CUT:
         if (actionKey.payload.children?.length === 0) {
@@ -80,12 +82,47 @@ function App() {
           setTreeData([...temp])
         } else alert("امکان چسباندن آیتم بر روز خودش وجود ندارد")
         break;
+      case actions.ADD:
+        setSelectedItem(actionKey.payload)
+        break;
     }
 
   };
   const handleUpdateTree = (nodes: NodeType[]) => { };
 
-  const handleUpdateNode = (key: string, data: any) => { };
+  const handleUpdateNode = (key: string, data: any) => {
+    debugger;
+    let temp = treeData;
+    // function pushNewUser(node:any, targetKey:string){
+    //   if(node.key == targetKey){
+    //     node.children.push(data)
+
+    //   } else {
+    //     for(let i = 0; i<node.children.length; i++) {
+    //       pushNewUser(node.children[i], targetKey);
+    //     }
+    //   }
+    // }
+    let flag = true;
+    function pushNewUser(currentItem: any, targetKey: any) {
+      if (flag) {
+        if (currentItem.key === targetKey) {
+
+          flag = false
+          currentItem.children.push({ ...data })
+          return
+        } else {
+          for (let index = 0; index < currentItem.children.length; index++) {
+            pushNewUser(currentItem.children[index], targetKey)
+          }
+        }
+      }
+    }
+    for (let i = 0; i < temp.length; i++) {
+      pushNewUser(temp[i], key)
+    }
+    setTreeData([...temp])
+  };
 
   return (
     <AppContext.Provider
