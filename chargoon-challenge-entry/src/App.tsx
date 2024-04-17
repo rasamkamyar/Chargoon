@@ -21,15 +21,40 @@ function App() {
   }, []);
 
   const handleContextMenuClick = (actionKey: MenuActionType) => {
+    let temp = treeData;
+
+    function deleteItem(parentNode: any, targetKey: any) {
+      let flag: boolean = true;
+      if (parentNode.children.length) {
+        for (let i = 0; i < parentNode.children.length; i++) {
+          if (parentNode.children[i].key === targetKey) {
+            parentNode.children = parentNode.children.filter(function (item: any) {
+              return item.key != targetKey
+            })
+            flag = false;
+          }
+        }
+        for (let i = 0; flag && i < parentNode.children.length; i++) {
+          deleteItem(parentNode.children[i], targetKey)
+        }
+      }
+    }
+
+
     switch (actionKey.type) {
-      case "DELETE":
+      case actions.DELETE:
+        if (actionKey.payload.children?.length === 0) {
+          for (let i = 0; i < temp.length; i++) {
+            deleteItem(temp[i], actionKey.payload.key)
+          }
+          setTreeData([...temp])
+        } else (alert("آیتم دارای زیرشاخه قابل حذف نیست"))
         break;
     }
   };
+  const handleUpdateTree = (nodes: NodeType[]) => { };
 
-  const handleUpdateTree = (nodes: NodeType[]) => {};
-
-  const handleUpdateNode = (key: string, data: any) => {};
+  const handleUpdateNode = (key: string, data: any) => { };
 
   return (
     <AppContext.Provider

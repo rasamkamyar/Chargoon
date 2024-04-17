@@ -18,6 +18,6 @@ export function ContextMenuEx({ id, children }) {
 
 export function ContextMenuItemEx({ title, handleClick, type, payload }) {
     return (
-        <ContextMenuItem onClick={handleClick({type: type, payload: payload})}>{title}</ContextMenuItem>
+        <ContextMenuItem onClick={() => handleClick({type: type, payload: payload})}>{title}</ContextMenuItem>
     );
 }
