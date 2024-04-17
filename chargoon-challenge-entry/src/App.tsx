@@ -21,20 +21,8 @@ function App() {
   }, []);
 
   const handleContextMenuClick = (actionKey: MenuActionType) => {
-    function removeItem(higherArchies:any, parentKey:any, targetKey: any) {
-      let temp = treeData[0];
-      let targetPath = [0];
-      for(let i = 0; i<higherArchies.length ; i++){
-        for(let j = 0; j<temp.children.length; j++){
-          // if(parentKey == )
-        }
-      }
-    }
     switch (actionKey.type) {
       case "DELETE":
-        if (actionKey.payload.children.length === 0) {
-          console.log("okkk");
-        }
         break;
     }
   };

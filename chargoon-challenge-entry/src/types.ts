@@ -17,5 +17,5 @@ export interface NodeType {
 
 export interface MenuActionType {
 	type:string,
-	payload:any
+	payload:any,
 }
