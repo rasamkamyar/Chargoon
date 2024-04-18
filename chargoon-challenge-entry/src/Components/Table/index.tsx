@@ -3,7 +3,7 @@ import { Button, Popover } from 'antd';
 import React from 'react';
 interface Props { }
 function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
-	console.log(mockData)
+	
 	return (
 		<table>
 			<thead>
@@ -25,6 +25,7 @@ function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
 							})
 						}}>حذف</button>
 					)
+					console.log(mockData)
 					return (
 						<tr className='tableStyle' key={item.code} >
 							<td>
@@ -37,7 +38,7 @@ function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
 									setMockData(function (prev: any) {
 										return prev.map(function (currentItem: any) {
 											if (currentItem.id === item.id) {
-												return { ...currentItem, checked: !! e.checked }
+												return { ...currentItem, checked: !e.checked }
 											} else {
 												return { ...currentItem }
 											}

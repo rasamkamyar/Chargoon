@@ -46,15 +46,12 @@ const TreeExtended: React.FC<Props> = ({ handleContextMenuClick, setSelectedItem
     function searchNodes(currentNode: any, tempAddress: any) {
 
       if (currentNode.title.includes(e.target.value)) {
-        let currentAddress= [];
+        
         if(currentNode.hierarchy.length > 0){
           for(let i = 0; i<currentNode.hierarchy.length; i++){
-            findNodeTitle(treeData[0], currentNode.hierarchy[i])
-           
+            findNodeTitle(treeData[0], currentNode.hierarchy[i])      
             addressPath.push(searchTemp)
-            
-           
-            
+
           }
         }
         currentSearchResult.push({
@@ -67,7 +64,6 @@ const TreeExtended: React.FC<Props> = ({ handleContextMenuClick, setSelectedItem
 
       }
       if (currentNode.children.length != 0) {
-        tempAddress.push(currentNode.title)
         for (let i = 0; i < currentNode.children.length; i++) {
           searchNodes(currentNode.children[i], tempAddress)
         }

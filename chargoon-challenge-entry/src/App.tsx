@@ -18,16 +18,16 @@ function App() {
     setTreeData(result);
   };
   const [newUser, setNewUser] = useState({
-		key: '',
-		title: '',
-		parentKey: "",
-		hierarchy: [],
-		users: [
-		],
-		accesses: [],
-		children: []
-	})
- 
+    key: '',
+    title: '',
+    parentKey: "",
+    hierarchy: [],
+    users: [
+    ],
+    accesses: [],
+    children: []
+  })
+
 
   useEffect(() => {
     fetchTreeData();
@@ -89,20 +89,22 @@ function App() {
           for (let index = 0; index < temp.length; index++) {
             pasteItem(temp[index], actionKey.payload.key)
           }
-
+          setClipBord(null)
           setTreeData([...temp])
-        } else alert("امکان چسباندن آیتم بر روز خودش وجود ندارد")
+        } else alert("امکان چسباندن آیتم بر روی خودش وجود ندارد")
         break;
       case actions.ADD:
         setSelectedItem(actionKey.payload)
         break;
+      default:
+        console.log("default")
     }
 
   };
   const handleUpdateTree = (nodes: NodeType[]) => { };
 
   const handleUpdateNode = (key: string, data: any) => {
-    
+
     let temp = treeData;
     function addItem(currentItem: any, targetKey: any, newUser: any) {
 
@@ -118,7 +120,9 @@ function App() {
       }
     }
 
-    addItem(temp[0], key, data)
+    for (let i = 0; i < temp.length; i++) {
+      addItem(temp[i], key, data)
+    }
 
     setTreeData([
       ...temp,

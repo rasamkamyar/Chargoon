@@ -10,7 +10,7 @@ function SearchResult({ items }: any) {
 	
 	return <div className='search-result' style={{height: 200, overflow: 'auto'}}>
 		{items.map(function(item:any) {
-			debugger
+		
 			let elements = item?.nodeAddress?.map(function(addressItem: any, index:number){
 				return (
 					<div style={{paddingRight: `${index*25}px`}}>
