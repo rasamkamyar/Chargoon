@@ -11,35 +11,38 @@ import Table from '../Table';
 import { NodeType } from '../../types';
 
 interface Props {
+	newUser: any,
+	setNewUser: any,
 	item: any;
-	updateNode: (key: string, data: any) => void
+	updateNode: (key: string, data: any,) => void
 }
 
-function Form({ item, updateNode }: Props) {
+function Form({ item, updateNode, newUser, setNewUser }: Props) {
 	const [mockData, setMockData] = useState([{
 		operation: true,
 		checked: false,
-		code: item?.key
+		code: "200"
 	}])
+
+	
 	const [checkedItems, setCheckedItems] = useState([]);
 
 
-	const [newUser, setNewUser] = useState({
-		key: '',
-		title: '',
-		parentKey: item?.key,
-		hierarchy: [],
-		users: [
-		],
-		accesses: [],
-		children: []
-	})
+	
 
 
 	const handleSave = () => {
 		updateNode(item.key, newUser)
+		setNewUser(function(prev: any){
+			return {
+				...prev,
+				key: "",
+				title: ""
+				
+			}
+		})
 	}
-	console.log(newUser)
+
 
 	return (
 		<div className='detail'>
@@ -48,6 +51,7 @@ function Form({ item, updateNode }: Props) {
 					<Tabs.TabPane tab="اطلاعات اصلی" key="item-1">
 						<div className='form-content flex flex-col '>
 							<BasicInformation initialValue={item}
+								
 								newUser={newUser}
 								setNewUser={setNewUser}
 							/>
@@ -64,7 +68,9 @@ function Form({ item, updateNode }: Props) {
 						</div>
 					</Tabs.TabPane>
 				</Tabs>
-				<Button type='primary' onClick={handleSave}>ذخیره</Button>
+				{
+					item && <Button type='primary' onClick={handleSave}>ذخیره</Button>
+				}
 			</div>
 			<ActionBar actions={[]} />
 		</div>

@@ -21,16 +21,16 @@ function BasicInformation({initialValue, newUser, setNewUser }: any) {
 			}
 		})
 	}
-
 	
+
 	
 	return (
 		<Form form={form}>
 			<Form.Item name="title" label="عنوان" labelCol={{ span: 2 }} >
-				<Input value={newUser.title} name='title' onChange={handleChange} />
+				<Input value={newUser.title} name='title' onKeyDown={handleChange} />
 			</Form.Item>
 			<Form.Item name="code" label="کد" labelCol={{ span: 2 }}>
-				<Input name="key" value={newUser.key} onChange={handleChange} />
+				<Input name="key" value={newUser.key} onKeyDown={handleChange} />
 			</Form.Item>
 			<Form.Item name="users" label="کاربران" labelCol={{ span: 2 }}>
 				<UserAutoComplete />

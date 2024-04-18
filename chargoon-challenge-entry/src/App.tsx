@@ -12,10 +12,22 @@ function App() {
   const [showEdit, setShowEdit] = useState(true);
   const [treeData, setTreeData] = useState<NodeType[]>([]);
   const [clipBoard, setClipBord] = useState<NodeType | null>(null)
+  const [searchResult, setSearchResult] = useState<any>([])
   const fetchTreeData = async () => {
     const result = await getNodes();
     setTreeData(result);
   };
+  const [newUser, setNewUser] = useState({
+		key: '',
+		title: '',
+		parentKey: "",
+		hierarchy: [],
+		users: [
+		],
+		accesses: [],
+		children: []
+	})
+ 
 
   useEffect(() => {
     fetchTreeData();
@@ -89,38 +101,8 @@ function App() {
   };
   const handleUpdateTree = (nodes: NodeType[]) => { };
 
-  //   // function pushNewUser(node:any, targetKey:string){
-  //   //   if(node.key == targetKey){
-  //   //     node.children.push(data)
-
-  //   //   } else {
-  //   //     for(let i = 0; i<node.children.length; i++) {
-  //   //       pushNewUser(node.children[i], targetKey);
-  //   //     }
-  //   //   }
-  //   // }
-  //   let flag = true;
-  //   function pushNewUser(currentItem: any, targetKey: any) {
-  //     if (flag) {
-  //       if (currentItem.key === targetKey) {
-
-  //         flag = false
-  //         currentItem.children.push({ ...data })
-  //       } else {
-  //         for (let index = 0; index < currentItem.children.length; index++) {
-  //           pushNewUser(currentItem.children[index], targetKey)
-  //         }
-  //       }
-  //     }
-  //   }
-  //   for (let i = 0; i < temp.length; i++) {
-  //     pushNewUser(temp[i], key)
-  //   }
-  //   setTreeData([...temp])
-  // };
-
   const handleUpdateNode = (key: string, data: any) => {
-    debugger
+    
     let temp = treeData;
     function addItem(currentItem: any, targetKey: any, newUser: any) {
 
@@ -141,20 +123,22 @@ function App() {
     setTreeData([
       ...temp,
     ])
-    
+    setSelectedItem(null)
   }
   return (
     <AppContext.Provider
       value={{
         treeData,
         updateTreeData: handleUpdateTree,
+        searchResult: searchResult,
+        setSearchResult: setSearchResult
       }}
     >
       <div className="App">
         <Sidebar>
-          <ExtendedTree handleContextMenuClick={handleContextMenuClick} />
+          <ExtendedTree setSelectedItem={setSelectedItem} handleContextMenuClick={handleContextMenuClick} />
         </Sidebar>
-        {showEdit && <Form item={selectedItem} updateNode={handleUpdateNode} />}
+        {showEdit && <Form newUser={newUser} setNewUser={setNewUser} item={selectedItem} updateNode={handleUpdateNode} />}
       </div>
     </AppContext.Provider>
   );
