@@ -19,9 +19,9 @@ interface Props {
 
 function Form({ item, updateNode, newUser, setNewUser }: Props) {
 	const [mockData, setMockData] = useState([{
-		operation: true,
 		checked: false,
-		code: "200"
+		code: "200",
+		id:0
 	}])
 
 	

@@ -3,6 +3,7 @@ import { Button, Popover } from 'antd';
 import React from 'react';
 interface Props { }
 function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
+	console.log(mockData)
 	return (
 		<table>
 			<thead>
@@ -15,52 +16,34 @@ function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
 			<tbody>
 				{mockData.map(function (item: any) {
 
+					const deleteBtn = (
+						<button onClick={() => {
+							setMockData(function (prev: any) {
+								return prev.filter(function (currentItem: any) {
+									return currentItem.id !== item.id
+								})
+							})
+						}}>حذف</button>
+					)
 					return (
-						<tr className='tableStyle' key={item.key} >
+						<tr className='tableStyle' key={item.code} >
 							<td>
-								<Popover content="" title="Delete" trigger="click">
-
+								<Popover content={deleteBtn} trigger="click">
 									<img src='/dots.png' width="40px" height="40px" />
-
-
 								</Popover>
 							</td>
 							<td> <input type="checkbox"
-							// checked={checkedItems.includes(item.key) ? true : false}
-							//  onChange={() => {
-							// 	setMockData(function(prev: any) {
-							// 		return prev.map(function(rowItem: any, index:number) {
-							// 			if(rowItem.key == item.key){
-
-							// 				return {
-							// 					...rowItem,
-							// 					checked: !rowItem.checked
-							// 				}
-							// 			}else {
-							// 				return {
-							// 					...rowItem
-							// 				}
-							// 			}
-							// 		})
-							// 	})
-							// 	// if(checkedItems.includes(item.key)){
-							// 	// 	setCheckedItems(function(prev: any) {
-							// 	// 		return prev.filter(function(item:any) {
-							// 	// 			return item != item.key
-							// 	// 		})
-							// 	// 	})
-							// 	// }else {
-							// 	// 	setCheckedItems(function(prev : any) {
-							// 	// 		return [
-							// 	// 			...prev,
-							// 	// 			item.key
-							// 	// 		]
-							// 	// 	})
-							// 	// }
-
-							// }}
-
-
+								onChange={(e: any) => {
+									setMockData(function (prev: any) {
+										return prev.map(function (currentItem: any) {
+											if (currentItem.id === item.id) {
+												return { ...currentItem, checked: !! e.checked }
+											} else {
+												return { ...currentItem }
+											}
+										})
+									})
+								}}
 							/> </td>
 							<td> {item.code} </td>
 						</tr>
