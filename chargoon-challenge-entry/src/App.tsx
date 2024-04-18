@@ -16,7 +16,6 @@ function App() {
     const result = await getNodes();
     setTreeData(result);
   };
-  console.log(treeData)
 
   useEffect(() => {
     fetchTreeData();
@@ -90,40 +89,60 @@ function App() {
   };
   const handleUpdateTree = (nodes: NodeType[]) => { };
 
+  //   // function pushNewUser(node:any, targetKey:string){
+  //   //   if(node.key == targetKey){
+  //   //     node.children.push(data)
+
+  //   //   } else {
+  //   //     for(let i = 0; i<node.children.length; i++) {
+  //   //       pushNewUser(node.children[i], targetKey);
+  //   //     }
+  //   //   }
+  //   // }
+  //   let flag = true;
+  //   function pushNewUser(currentItem: any, targetKey: any) {
+  //     if (flag) {
+  //       if (currentItem.key === targetKey) {
+
+  //         flag = false
+  //         currentItem.children.push({ ...data })
+  //       } else {
+  //         for (let index = 0; index < currentItem.children.length; index++) {
+  //           pushNewUser(currentItem.children[index], targetKey)
+  //         }
+  //       }
+  //     }
+  //   }
+  //   for (let i = 0; i < temp.length; i++) {
+  //     pushNewUser(temp[i], key)
+  //   }
+  //   setTreeData([...temp])
+  // };
+
   const handleUpdateNode = (key: string, data: any) => {
-    debugger;
+    debugger
     let temp = treeData;
-    // function pushNewUser(node:any, targetKey:string){
-    //   if(node.key == targetKey){
-    //     node.children.push(data)
+    function addItem(currentItem: any, targetKey: any, newUser: any) {
 
-    //   } else {
-    //     for(let i = 0; i<node.children.length; i++) {
-    //       pushNewUser(node.children[i], targetKey);
-    //     }
-    //   }
-    // }
-    let flag = true;
-    function pushNewUser(currentItem: any, targetKey: any) {
-      if (flag) {
-        if (currentItem.key === targetKey) {
+      if (currentItem.key === targetKey) {
 
-          flag = false
-          currentItem.children.push({ ...data })
-          return
-        } else {
-          for (let index = 0; index < currentItem.children.length; index++) {
-            pushNewUser(currentItem.children[index], targetKey)
-          }
+        let newHigherarchy = currentItem.hierarchy
+        newHigherarchy.push(newUser.key)
+        currentItem.children.push({ ...newUser, parentKey: currentItem.key, hierarchy: newHigherarchy, children: [] })
+      } else {
+        for (let index = 0; index < currentItem.children.length; index++) {
+          addItem(currentItem.children[index], targetKey, data);
         }
       }
     }
-    for (let i = 0; i < temp.length; i++) {
-      pushNewUser(temp[i], key)
-    }
-    setTreeData([...temp])
-  };
 
+    addItem(temp[0], key, data)
+
+    setTreeData([
+      ...temp,
+    ])
+    
+  }
   return (
     <AppContext.Provider
       value={{

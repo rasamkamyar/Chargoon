@@ -10,23 +10,27 @@ interface Props {
 function BasicInformation({initialValue, newUser, setNewUser }: any) {
 	const [form] = Form.useForm();
 	
+	
 	function handleChange(e: any) {
 		const { value, name } = e.target
+		
 		setNewUser(function (prev: any) {
 			return {
-				...prev, [name]: value,
-				
+				...prev,
+				[name]: value,	
 			}
 		})
 	}
+
+	
 	
 	return (
 		<Form form={form}>
 			<Form.Item name="title" label="عنوان" labelCol={{ span: 2 }} >
-				<Input value="{newUser.title}" name='title' onChange={handleChange} />
+				<Input value={newUser.title} name='title' onChange={handleChange} />
 			</Form.Item>
 			<Form.Item name="code" label="کد" labelCol={{ span: 2 }}>
-				<Input name="key" value="{newUser.key}" onChange={handleChange} />
+				<Input name="key" value={newUser.key} onChange={handleChange} />
 			</Form.Item>
 			<Form.Item name="users" label="کاربران" labelCol={{ span: 2 }}>
 				<UserAutoComplete />
