@@ -14,10 +14,10 @@ export async function getNodes() {
 
 export async function getUsers() {
 	return [
-		{ label: 'superadmin', value: 'superadmin' },
-		{ label: 'admin', value: 'admin' },
-		{ label: 'alireza', value: 'alireza' },
-		{ label: 'alirezatest', value: 'alirezatest' },
+		{ label: 'superadmin', value: 'superadmin', id:1 },
+		{ label: 'admin', value: 'admin', id:2 },
+		{ label: 'alireza', value: 'alireza', id:3 },
+		{ label: 'alirezatest', value: 'alirezatest', id:4 },
 
 	]
 }

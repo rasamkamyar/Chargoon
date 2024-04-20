@@ -20,7 +20,7 @@ const TreeExtended: React.FC<Props> = ({ handleContextMenuClick, setSelectedItem
   const searchedKeyword = useRef();
   const [searchResultVisible, setSearchResultVisible] = useState(true);
   const [searchResultList, setSearchResultList] = useState<any>([]);
-  const { treeData } = useContext(AppContext);
+  const { treeData, setIsAdding } = useContext(AppContext);
 
   const onExpand = (newExpandedKeys: any[]) => {
     setExpandedKeys(newExpandedKeys);
@@ -63,7 +63,7 @@ const TreeExtended: React.FC<Props> = ({ handleContextMenuClick, setSelectedItem
         searchTemp = ""
 
       }
-      if (currentNode.children.length != 0) {
+      if (currentNode.children.length !== 0) {
         for (let i = 0; i < currentNode.children.length; i++) {
           searchNodes(currentNode.children[i], tempAddress)
         }
@@ -88,13 +88,16 @@ const TreeExtended: React.FC<Props> = ({ handleContextMenuClick, setSelectedItem
   };
 
   const handleSelectNode = (selectedKeys: any, e: any) => {
+    setIsAdding(false)
     setSelectedItem({
       ...e.selectedNodes[0]
     })
+    
   }
 
   return (
     <div className="tree-wrap">
+      
       <Search
         style={{ marginBottom: 8 }}
         placeholder="جستجو"

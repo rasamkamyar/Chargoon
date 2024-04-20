@@ -3,7 +3,7 @@ import AppContext from "./appContext";
 import Form from "./Components/Form";
 import Sidebar from "./Components/Sidebar";
 import ExtendedTree from "./Components/Tree";
-import { getNodes } from "./transportLayer";
+import { getNodes, getUsers } from "./transportLayer";
 import { NodeType, MenuActionType } from "./types";
 import actions from "./actions";
 
@@ -13,28 +13,29 @@ function App() {
   const [treeData, setTreeData] = useState<NodeType[]>([]);
   const [clipBoard, setClipBord] = useState<NodeType | null>(null)
   const [searchResult, setSearchResult] = useState<any>([])
+  const [allUsers, setAllUsers] = useState<any>(null)
+  const [isAdding, setIsAdding] = useState<boolean>(false)
   const fetchTreeData = async () => {
     const result = await getNodes();
     setTreeData(result);
   };
-  const [newUser, setNewUser] = useState({
-    key: '',
-    title: '',
-    parentKey: "",
-    hierarchy: [],
-    users: [
-    ],
-    accesses: [],
-    children: []
-  })
 
+  const fetchUsersData = async () => {
+    const result = await getUsers();
+    setAllUsers(result);
+  };
+
+
+  
 
   useEffect(() => {
     fetchTreeData();
+    fetchUsersData();
   }, []);
 
   const handleContextMenuClick = (actionKey: MenuActionType) => {
     let temp = treeData;
+    setIsAdding(false)
 
     function deleteItem(parentNode: any, targetKey: any) {
       let flag: boolean = true;
@@ -94,6 +95,7 @@ function App() {
         } else alert("امکان چسباندن آیتم بر روی خودش وجود ندارد")
         break;
       case actions.ADD:
+        setIsAdding(true)
         setSelectedItem(actionKey.payload)
         break;
       default:
@@ -133,16 +135,21 @@ function App() {
     <AppContext.Provider
       value={{
         treeData,
+        allUsers,
         updateTreeData: handleUpdateTree,
         searchResult: searchResult,
-        setSearchResult: setSearchResult
+        setSelectedItem: setSelectedItem,
+        setSearchResult: setSearchResult,
+        isAdding,
+        setIsAdding,
       }}
     >
       <div className="App">
         <Sidebar>
           <ExtendedTree setSelectedItem={setSelectedItem} handleContextMenuClick={handleContextMenuClick} />
         </Sidebar>
-        {showEdit && <Form newUser={newUser} setNewUser={setNewUser} item={selectedItem} updateNode={handleUpdateNode} />}
+        {showEdit && <Form item={selectedItem} updateNode={handleUpdateNode} />}
+        
       </div>
     </AppContext.Provider>
   );

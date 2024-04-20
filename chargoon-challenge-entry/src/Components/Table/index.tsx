@@ -1,9 +1,14 @@
 import { editableInputTypes } from '@testing-library/user-event/dist/utils';
 import { Button, Popover } from 'antd';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { getUsers } from '../../transportLayer';
+import AppContext from '../../appContext';
 interface Props { }
-function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
+function Table({ newUser , setNewUser }: any) {
 	
+	const {allUsers} = useContext(AppContext)
+	
+	// console.log(allUsers)
 	return (
 		<table>
 			<thead>
@@ -14,20 +19,24 @@ function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
 				</tr>
 			</thead>
 			<tbody>
-				{mockData.map(function (item: any) {
-
+				{newUser?.users?.map(function (item: any) {
+					
+					console.log(item)
+					let itemId = allUsers?.find((userItem: any) => userItem.label == item.title).value
+				
 					const deleteBtn = (
 						<button onClick={() => {
-							setMockData(function (prev: any) {
-								return prev.filter(function (currentItem: any) {
-									return currentItem.id !== item.id
-								})
+							setNewUser(function (prev: any) {
+								return {
+									...newUser,
+									users: prev.users.filter((filterItem: any) => filterItem.title != item.title)
+								}
 							})
 						}}>حذف</button>
 					)
-					console.log(mockData)
+					
 					return (
-						<tr className='tableStyle' key={item.code} >
+						<tr className='tableStyle' key={item.title} >
 							<td>
 								<Popover content={deleteBtn} trigger="click">
 									<img src='/dots.png' width="40px" height="40px" />
@@ -35,18 +44,10 @@ function Table({ mockData, setMockData, checkedItems, setCheckedItems }: any) {
 							</td>
 							<td> <input type="checkbox"
 								onChange={(e: any) => {
-									setMockData(function (prev: any) {
-										return prev.map(function (currentItem: any) {
-											if (currentItem.id === item.id) {
-												return { ...currentItem, checked: !e.checked }
-											} else {
-												return { ...currentItem }
-											}
-										})
-									})
+									console.log(e)
 								}}
 							/> </td>
-							<td> {item.code} </td>
+							<td>{itemId ? itemId : ""}</td>
 						</tr>
 					)
 				})}

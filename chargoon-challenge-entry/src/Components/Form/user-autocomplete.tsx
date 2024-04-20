@@ -3,10 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getUsers } from '../../transportLayer';
 
 
-const UserAutoComplete: React.FC = () => {
+const UserAutoComplete: any = ({onAdd}:any) => {
   const orginalOptions = useRef([]);
   const [options, setOptions] = useState<{ label: string | null; value: string }[]>([]);
+  const [selectedItem, setSelectedItem] = useState<any>("");
 
+  
   useEffect(() => {
     getUsers().then((users) => {
       orginalOptions.current = users;
@@ -22,7 +24,7 @@ const UserAutoComplete: React.FC = () => {
   };
 
   const onSelect = (data: string) => {
-    console.log('onSelect', data);
+    setSelectedItem(data)
   };
 
   return (
@@ -33,8 +35,9 @@ const UserAutoComplete: React.FC = () => {
         onSelect={onSelect}
         onSearch={onSearch}
         placeholder="جستجوی کاربر"
+    
       />
-     <Button >افزودن</Button>
+     <button onClick={()=>onAdd(selectedItem)}>افزودن</button>
     </>
   );
 };

@@ -3,15 +3,20 @@ import { NodeType } from './types';
 
 
 interface AppContext {
-    updateTreeData: (nodes: NodeType[]) => void;
+    updateTreeData: any;
+    allUsers?: any;
     treeData: NodeType[];
     searchResult?: any;
+    setSelectedItem?: any;
     setSearchResult?: any
+    isAdding?: boolean;
+    setIsAdding?: any;
 }
 
 const defaultAppContext: AppContext = {
+    
     treeData: [],
-    updateTreeData: () => [],
+    updateTreeData: null,
 };
 
 const AppContext = React.createContext<AppContext>(defaultAppContext);

@@ -17,18 +17,28 @@ interface Props {
 	updateNode: (key: string, data: any,) => void
 }
 
-function Form({ item, updateNode, newUser, setNewUser }: Props) {
-	const [mockData, setMockData] = useState([{
-		checked: false,
-		code: "200",
-		id:0
-	}])
-
+function Form({ item, updateNode }: any) {
 	
 	const [checkedItems, setCheckedItems] = useState([]);
 
 
-	
+	const [newUser, setNewUser] = useState({
+		key: '',
+		title: '',
+		parentKey: "",
+		hierarchy: [],
+		users: [
+		],
+		accesses: [],
+		children: []
+	  })
+
+	  useMemo(() => {
+		setNewUser({
+			...item
+		})
+	  }, [item])
+
 
 
 	const handleSave = () => {
@@ -43,6 +53,7 @@ function Form({ item, updateNode, newUser, setNewUser }: Props) {
 		})
 	}
 
+	
 
 	return (
 		<div className='detail'>
@@ -50,13 +61,15 @@ function Form({ item, updateNode, newUser, setNewUser }: Props) {
 				<Tabs >
 					<Tabs.TabPane tab="اطلاعات اصلی" key="item-1">
 						<div className='form-content flex flex-col '>
-							<BasicInformation initialValue={item}
+							<BasicInformation 
+
+								
 								
 								newUser={newUser}
 								setNewUser={setNewUser}
 							/>
 							{item && (
-								<Table mockData={mockData} setMockData={setMockData} checkedItems={checkedItems} setCheckedItems={setCheckedItems} />
+								<Table setNewUser={setNewUser} newUser={newUser} />
 							)}
 						</div>
 					</Tabs.TabPane>

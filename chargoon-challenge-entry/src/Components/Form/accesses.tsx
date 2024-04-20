@@ -8,7 +8,7 @@ interface Props {
 
 function Accesses({ setNewUser, initialValue }: any) {
 	const [options, setOptions] = useState([]);
-
+	
 	const fetchAccessList = async () => {
 		const result = await getAccessList();
 		const options = result.map(item => ({ ...item, value: item.id }))
