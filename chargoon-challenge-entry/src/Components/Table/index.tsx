@@ -8,7 +8,7 @@ function Table({ newUser , setNewUser }: any) {
 	
 	const {allUsers} = useContext(AppContext)
 	
-	// console.log(allUsers)
+	
 	return (
 		<table>
 			<thead>
@@ -21,7 +21,7 @@ function Table({ newUser , setNewUser }: any) {
 			<tbody>
 				{newUser?.users?.map(function (item: any) {
 					
-					console.log(item)
+					
 					let itemId = allUsers?.find((userItem: any) => userItem.label == item.title).value
 				
 					const deleteBtn = (
@@ -44,7 +44,7 @@ function Table({ newUser , setNewUser }: any) {
 							</td>
 							<td> <input type="checkbox"
 								onChange={(e: any) => {
-									console.log(e)
+									
 								}}
 							/> </td>
 							<td>{itemId ? itemId : ""}</td>

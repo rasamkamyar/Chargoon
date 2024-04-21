@@ -8,12 +8,12 @@ import { NodeType, MenuActionType } from "./types";
 import actions from "./actions";
 
 function App() {
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState({});
   const [showEdit, setShowEdit] = useState(true);
   const [treeData, setTreeData] = useState<NodeType[]>([]);
   const [clipBoard, setClipBord] = useState<NodeType | null>(null)
   const [searchResult, setSearchResult] = useState<any>([])
-  const [allUsers, setAllUsers] = useState<any>(null)
+  const [allUsers, setAllUsers] = useState<any>([])
   const [isAdding, setIsAdding] = useState<boolean>(false)
   const fetchTreeData = async () => {
     const result = await getNodes();
@@ -35,7 +35,7 @@ function App() {
 
   const handleContextMenuClick = (actionKey: MenuActionType) => {
     let temp = treeData;
-    setIsAdding(false)
+    
 
     function deleteItem(parentNode: any, targetKey: any) {
       let flag: boolean = true;
@@ -95,14 +95,21 @@ function App() {
         } else alert("امکان چسباندن آیتم بر روی خودش وجود ندارد")
         break;
       case actions.ADD:
-        setIsAdding(true)
-        setSelectedItem(actionKey.payload)
+    
+        setSelectedItem({
+          ...actionKey.payload
+        })
+        
+   
         break;
       default:
-        console.log("default")
+    
     }
 
   };
+
+ 
+
   const handleUpdateTree = (nodes: NodeType[]) => { };
 
   const handleUpdateNode = (key: string, data: any) => {
@@ -130,6 +137,8 @@ function App() {
       ...temp,
     ])
     setSelectedItem(null)
+    
+    setIsAdding(false)
   }
   return (
     <AppContext.Provider

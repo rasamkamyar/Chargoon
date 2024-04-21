@@ -10,7 +10,8 @@ interface Props {
 
 function BasicInformation({ newUser, setNewUser }: any) {
 	const [form] = Form.useForm();
-	const {allUsers} = useContext(AppContext)
+	const {allUsers, isAdding} = useContext(AppContext)
+
 
 
 
@@ -26,9 +27,9 @@ function BasicInformation({ newUser, setNewUser }: any) {
 	}
 
 	function handleAddUser(title: string){
-		
+		if(isAdding){
 		const result = newUser?.users?.find((item: any) => item.title == title)
-		console.log(result)
+		
 		if(result){
 			alert("کاربری مورد نظر در حال حاضر وجود دارد")
 		}else {
@@ -46,6 +47,9 @@ function BasicInformation({ newUser, setNewUser }: any) {
 				}
 			})
 		}
+	} else {
+		alert("برای افزودن کاربر ابتدا باید وارد پروسه افزودن کاربر شوید")
+	}
 	}
 
 	
@@ -55,6 +59,7 @@ function BasicInformation({ newUser, setNewUser }: any) {
 			<Form.Item name="title" label="عنوان" labelCol={{ span: 2 }} >
 				<Input type='text' value={newUser?.title ? newUser.title : ""} name='title' onChange={handleChange} />
 				<span style={{display: "none"}}>{newUser?.title ? newUser.title : "harhci"}</span>
+			
 			</Form.Item>
 			<Form.Item name="code" label="کد" labelCol={{ span: 2 }}>
 				<Input name="key" value={newUser?.key ? newUser.key : ""} onChange={handleChange} />

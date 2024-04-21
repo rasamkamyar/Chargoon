@@ -1,5 +1,5 @@
 import { Button, Input, Tabs } from 'antd';
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import ErrorBoundry from '../../ErrorBoundry';
 import ActionBar from '../ActionBar';
 import ArrowDownIcon from '../SvgIcons/arrow-down';
@@ -9,6 +9,7 @@ import BasicInformation from './basic-information';
 import UsersList from './user-autocomplete';
 import Table from '../Table';
 import { NodeType } from '../../types';
+import AppContext from '../../appContext';
 
 interface Props {
 	newUser: any,
@@ -18,6 +19,7 @@ interface Props {
 }
 
 function Form({ item, updateNode }: any) {
+	const {isAdding} = useContext(AppContext)
 	
 	const [checkedItems, setCheckedItems] = useState([]);
 
@@ -34,14 +36,30 @@ function Form({ item, updateNode }: any) {
 	  })
 
 	  useMemo(() => {
-		setNewUser({
-			...item
-		})
+
+		if(isAdding){
+			setNewUser({
+				...item,
+				title: "",
+				key: "",
+				children: [],
+				users: [],
+				accesses: []
+
+			})
+		}else {
+			setNewUser({
+				...item,
+				
+			})
+		}
+		
 	  }, [item])
 
 
 
 	const handleSave = () => {
+	
 		updateNode(item.key, newUser)
 		setNewUser(function(prev: any){
 			return {
@@ -51,6 +69,7 @@ function Form({ item, updateNode }: any) {
 				
 			}
 		})
+		
 	}
 
 	
@@ -68,6 +87,7 @@ function Form({ item, updateNode }: any) {
 								newUser={newUser}
 								setNewUser={setNewUser}
 							/>
+							
 							{item && (
 								<Table setNewUser={setNewUser} newUser={newUser} />
 							)}
@@ -82,7 +102,7 @@ function Form({ item, updateNode }: any) {
 					</Tabs.TabPane>
 				</Tabs>
 				{
-					item && <Button type='primary' onClick={handleSave}>ذخیره</Button>
+					isAdding && item && <Button type='primary' onClick={handleSave}>ذخیره</Button>
 				}
 			</div>
 			<ActionBar actions={[]} />

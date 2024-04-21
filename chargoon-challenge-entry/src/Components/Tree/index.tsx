@@ -88,13 +88,25 @@ const TreeExtended: React.FC<Props> = ({ handleContextMenuClick, setSelectedItem
   };
 
   const handleSelectNode = (selectedKeys: any, e: any) => {
-    setIsAdding(false)
+    const targetContent = e.nativeEvent.target.textContent
+    
+    
+    
+    if(targetContent === "افزودن زیرشاخه" || targetContent == "برش" || targetContent == "چسباندن" || targetContent == "حذف"){
+      setIsAdding(true)
+    }else {
+      setIsAdding(false)
+    }
+
+    
+
     setSelectedItem({
-      ...e.selectedNodes[0]
+      ...e.node
     })
     
+    
   }
-
+  
   return (
     <div className="tree-wrap">
       

@@ -21,6 +21,7 @@ function Accesses({ setNewUser, initialValue }: any) {
 
 
 	const handleOnChange = (checkedValues: any) => {
+		
 		const accessesList: any = []
 
 		options.forEach(option => {
